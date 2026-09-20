@@ -21,4 +21,4 @@ cp -f /etc/xdg/autostart/warpinator-autostart.desktop ./AppDir/share/application
 quick-sharun --make-appimage
 
 # Test the AppImage
-quick-sharun --test ./dist/*.AppImage
+quick-sharun --simple-test ./dist/*.AppImage
