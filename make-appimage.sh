@@ -1,24 +1,24 @@
 #!/bin/sh
-
 set -eu
 
 ARCH=$(uname -m)
-VERSION=$(pacman -Q PACKAGENAME | awk '{print $2; exit}') # example command to get version of application here
-export ARCH VERSION
+export ARCH
 export OUTPATH=./dist
 export ADD_HOOKS="self-updater.hook"
 export UPINFO="gh-releases-zsync|${GITHUB_REPOSITORY%/*}|${GITHUB_REPOSITORY#*/}|latest|*$ARCH.AppImage.zsync"
-export ICON=PATH_OR_URL_TO_ICON
-export DESKTOP=PATH_OR_URL_TO_DESKTOP_ENTRY
+export DESKTOP=/usr/share/applications/org.x.Warpinator.desktop
+export ICON=/usr/share/icons/hicolor/scalable/apps/org.x.Warpinator-error-symbolic.svg
+export DEPLOY_PYTHON=1
 
 # Deploy dependencies
-quick-sharun /PATH/TO/BINARY_AND_LIBRARIES_HERE
+quick-sharun /usr/bin/warpinator* /usr/lib/warpinator /usr/share/warpinator /usr/lib/libgtk-3.so*
 
-# Additional changes can be done in between here
+# Deploy additional .desktop files
+mkdir -p ./AppDir/share/applications
+cp -f /etc/xdg/autostart/warpinator-autostart.desktop ./AppDir/share/applications/
 
 # Turn AppDir into AppImage
 quick-sharun --make-appimage
 
-# Test the app for 12 seconds, if the test fails due to the app
-# having issues running in the CI use --simple-test instead
+# Test the AppImage
 quick-sharun --test ./dist/*.AppImage

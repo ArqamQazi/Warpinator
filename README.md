@@ -1,21 +1,33 @@
 <div align="center">
 
-# TEMPLATE-AppImage 🐧
+# Warpinator-AppImage 🐧
 
-[![GitHub Downloads](https://img.shields.io/github/downloads/pkgforge-dev/TEMPLATE-AppImage/total?logo=github&label=GitHub%20Downloads)](https://github.com/pkgforge-dev/TEMPLATE-AppImage/releases/latest)
-[![CI Build Status](https://github.com/pkgforge-dev/TEMPLATE-AppImage/actions/workflows/appimage.yml/badge.svg)](https://github.com/pkgforge-dev/TEMPLATE-AppImage/releases/latest)
-[![Latest Stable Release](https://img.shields.io/github/v/release/pkgforge-dev/TEMPLATE-AppImage)](https://github.com/pkgforge-dev/TEMPLATE-AppImage/releases/latest)
+[![GitHub Downloads](https://img.shields.io/github/downloads/ArqamQazi/Warpinator/total?logo=github&label=GitHub%20Downloads)](https://github.com/ArqamQazi/Warpinator/releases/latest)
+[![CI Build Status](https://github.com/ArqamQazi/Warpinator/actions/workflows/appimage.yml/badge.svg)](https://github.com/ArqamQazi/Warpinator/releases/latest)
+[![Latest Stable Release](https://img.shields.io/github/v/release/ArqamQazi/Warpinator)](https://github.com/ArqamQazi/Warpinator/releases/latest)
 
 <p align="center">
-  <img src="https://github.com/pkgforge-dev.png" width="128" />
+  <img src="https://raw.githubusercontent.com/linuxmint/warpinator/master/data/icons/hicolor/256x256/apps/org.x.Warpinator.png" width="128" alt="Warpinator Logo" />
 </p>
-
 
 | Latest Stable Release | Upstream URL |
 | :---: | :---: |
-| [Click here](https://github.com/pkgforge-dev/TEMPLATE-AppImage/releases/latest) | [Click here](https://github.com/pkgforge-dev/Anylinux-AppImages) |
+| [Click here](https://github.com/ArqamQazi/Warpinator/releases/latest) | [Click here](https://github.com/linuxmint/warpinator) |
 
 </div>
+
+---
+
+### Description
+
+Warpinator is a local network file transfer tool developed by Linux Mint. It allows you to easily share files and directories between devices on the same local area network (LAN) without relying on cloud services or external servers.
+
+Features:
+- **Local Network Sharing**: Send and receive files and folders directly across your local network (LAN) with fast transfer speeds.
+- **Automatic Peer Discovery**: Automatically detects other devices on the network running Warpinator.
+- **Secure Transfers**: End-to-end encryption with customizable group codes / network PINs to authenticate peers.
+- **Transfer Control**: Monitor progress, view transfer history, and easily accept, reject, or pause file transfers.
+- **Cross-Device Support**: Interoperable with official and third-party Warpinator clients across different platforms.
 
 ---
 
@@ -32,7 +44,6 @@ Self-updater is disabled by default if AppImage managers like [am](https://githu
 <details>
   <summary><b><i>raison d'être</i></b></summary>
     <img src="https://github.com/user-attachments/assets/d40067a6-37d2-4784-927c-2c7f7cc6104b" alt="Inspiration Image">
-  </a>
 </details>
 
 ---
