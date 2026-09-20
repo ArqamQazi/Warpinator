@@ -2,13 +2,20 @@
 set -eu
 
 ARCH=$(uname -m)
-export ARCH
+VERSION=$(pacman -Q warpinator | awk '{print $2; exit}')
+export ARCH VERSION
 export OUTPATH=./dist
 export ADD_HOOKS="self-updater.hook"
 export UPINFO="gh-releases-zsync|${GITHUB_REPOSITORY%/*}|${GITHUB_REPOSITORY#*/}|latest|*$ARCH.AppImage.zsync"
 export DESKTOP=/usr/share/applications/org.x.Warpinator.desktop
-export ICON=/usr/share/icons/hicolor/scalable/apps/org.x.Warpinator-error-symbolic.svg
+export ICON=/usr/share/icons/hicolor/256x256/apps/org.x.Warpinator.png
 export DEPLOY_PYTHON=1
+
+export PATH_MAPPING='
+	/usr/lib/warpinator:${SHARUN_DIR}/lib/warpinator
+	/usr/share/warpinator:${SHARUN_DIR}/share/warpinator
+	/usr/share/locale:${SHARUN_DIR}/share/locale
+'
 
 # Deploy dependencies
 quick-sharun /usr/bin/warpinator* /usr/lib/warpinator /usr/share/warpinator /usr/lib/libgtk-3.so*
