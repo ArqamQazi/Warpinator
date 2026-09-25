@@ -10,9 +10,12 @@ export UPINFO="gh-releases-zsync|${GITHUB_REPOSITORY%/*}|${GITHUB_REPOSITORY#*/}
 export DESKTOP=/usr/share/applications/org.x.Warpinator.desktop
 export ICON=/usr/share/icons/hicolor/256x256/apps/org.x.Warpinator.png
 export DEPLOY_PYTHON=1
+export DEPLOY_GTK=1
 
 export PATH_MAPPING='
+	/usr/lib/warpinator:${SHARUN_DIR}/lib/warpinator
 	/usr/share/warpinator:${SHARUN_DIR}/share/warpinator
+	/usr/lib/girepository-1.0:${SHARUN_DIR}/lib/girepository-1.0
 	/usr/share/locale:${SHARUN_DIR}/share/locale
 '
 
@@ -21,8 +24,10 @@ quick-sharun \
 	/usr/bin/warpinator*      \
 	/usr/lib/warpinator       \
 	/usr/share/warpinator     \
+	/usr/share/glib-2.0/schemas \
 	/usr/lib/libgtk-3.so*     \
 	/usr/lib/libxapp.so*      \
+	/usr/lib/libgirepository-1.0.so* \
 	/usr/lib/libre2.so*       \
 	/usr/lib/libcares.so*     \
 	/usr/lib/libsodium.so*    \
@@ -32,12 +37,11 @@ quick-sharun \
 mkdir -p ./AppDir/share/applications
 cp -f /etc/xdg/autostart/warpinator-autostart.desktop ./AppDir/share/applications/
 
-# Patch wrapper scripts portably to use AppDir
-for bin in ./AppDir/bin/warpinator*; do
-  [ -f "$bin" ] || continue
-  sed 's|/usr|"$APPDIR"|g' "$bin" >"$bin.tmp" && mv -f "$bin.tmp" "$bin"
-  chmod 755 "$bin"
-done
+# Compile GSettings schemas for Warpinator and XApp
+glib-compile-schemas ./AppDir/share/glib-2.0/schemas
+
+# Ensure PyGObject finds the bundled typelibs
+echo 'GI_TYPELIB_PATH=${SHARUN_DIR}/lib/girepository-1.0:${GI_TYPELIB_PATH}' >> ./AppDir/.env
 
 # Turn AppDir into AppImage
 quick-sharun --make-appimage
