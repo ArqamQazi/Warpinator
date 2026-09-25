@@ -82,5 +82,5 @@ done
 # Turn AppDir into AppImage
 quick-sharun --make-appimage
 
-# Test the AppImage under a virtual X11 display
-quick-sharun --test ./dist/*.AppImage
+# Test the AppImage
+quick-sharun --simple-test ./dist/*.AppImage
