@@ -31,7 +31,8 @@ quick-sharun \
 	/usr/lib/libre2.so*       \
 	/usr/lib/libcares.so*     \
 	/usr/lib/libsodium.so*    \
-	/usr/lib/libprotobuf.so*
+	/usr/lib/libprotobuf.so*  \
+	/usr/lib/libabsl_*.so*
 
 # Deploy additional .desktop files
 mkdir -p ./AppDir/share/applications
@@ -59,6 +60,24 @@ glib-compile-schemas ./AppDir/share/glib-2.0/schemas
 
 # Ensure PyGObject finds the bundled typelibs
 echo 'GI_TYPELIB_PATH=${SHARUN_DIR}/lib/girepository-1.0:${GI_TYPELIB_PATH}' >> ./AppDir/.env
+
+# Guarantee complete transitive dependency closure for C extensions (e.g. grpcio, cygrpc)
+while :; do
+	new_libs=0
+	for elf in $(find ./AppDir/lib ./AppDir/bin -type f \( -name '*.so*' -o -perm /111 \)); do
+		for dep in $(ldd "$elf" 2>/dev/null | awk '/=> \//{print $3}'); do
+			base="${dep##*/}"
+			if [ ! -f "./AppDir/lib/$base" ] && [ -f "$dep" ]; then
+				cp -Lv "$dep" "./AppDir/lib/"
+				new_libs=1
+			fi
+		done
+	done
+	[ "$new_libs" = 0 ] && break
+done
+
+# Refresh lib.path for sharun runtime discovery
+./AppDir/sharun -g
 
 # Turn AppDir into AppImage
 quick-sharun --make-appimage
