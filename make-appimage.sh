@@ -37,6 +37,23 @@ quick-sharun \
 mkdir -p ./AppDir/share/applications
 cp -f /etc/xdg/autostart/warpinator-autostart.desktop ./AppDir/share/applications/
 
+# Relocate wrapper scripts to use bundled lib and python3
+cat <<'EOF' > ./AppDir/bin/warpinator
+#!/bin/sh
+APPDIR="${APPDIR:-$(cd "${0%/*}/.." && pwd)}"
+export WARPINATOR_PATH="$APPDIR/lib/warpinator"
+exec python3 "$WARPINATOR_PATH/warpinator-launch.py" "$@"
+EOF
+chmod 755 ./AppDir/bin/warpinator
+
+cat <<'EOF' > ./AppDir/bin/warpinator-send
+#!/bin/sh
+APPDIR="${APPDIR:-$(cd "${0%/*}/.." && pwd)}"
+export WARPINATOR_PATH="$APPDIR/lib/warpinator"
+exec python3 "$WARPINATOR_PATH/warpinator-send.py" "$@"
+EOF
+chmod 755 ./AppDir/bin/warpinator-send
+
 # Compile GSettings schemas for Warpinator and XApp
 glib-compile-schemas ./AppDir/share/glib-2.0/schemas
 
